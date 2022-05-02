@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const res = require('express/lib/response');
 const req = require('express/lib/request');
@@ -26,6 +26,13 @@ async function run() {
             const cursor = gearCollection.find(query);
             const gears = await cursor.toArray();
             res.send(gears);
+        })
+
+        app.get('/gear/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const gear = await gearCollection.findOne(query);
+            res.send(gear);
         })
 
     }

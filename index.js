@@ -35,6 +35,13 @@ async function run() {
             res.send(gear);
         })
 
+        //post
+        app.post('/gear', async (req, res) => {
+            const newGear = req.body;
+            const result = await gearCollection.insertOne(newGear);
+            res.send(result);
+        })
+
     }
     finally { }
 

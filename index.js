@@ -50,6 +50,22 @@ async function run() {
             res.send(result);
         })
 
+        app.put('/gear/:id', async (req, res) => {
+            console.log(req.body);
+            const id = req.params.id;
+            const updatedProduct = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updatedInfo = {
+                $set: {
+                    quantity: updatedProduct.updatedQuentity
+                }
+            }
+            const result = await gearCollection.updateOne(filter, updatedInfo, options);
+            res.send(result);
+        })
+
+
     }
     finally { }
 

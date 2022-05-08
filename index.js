@@ -43,12 +43,14 @@ async function run() {
         })
 
         //delete
+
         app.delete('/gear/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await gearCollection.deleteOne(query);
             res.send(result);
         })
+
 
         app.put('/gear/:id', async (req, res) => {
             console.log(req.body);
@@ -62,6 +64,24 @@ async function run() {
                 }
             }
             const result = await gearCollection.updateOne(filter, updatedInfo, options);
+            res.send(result);
+        })
+
+
+        //myOrder
+        app.get('/singlegear', async (req, res) => {
+            const email = req.query.email;
+            console.log(email);
+            const query = { email: email };
+            const cursor = gearCollection.find(query);
+            const gears = await cursor.toArray();
+            res.send(gears);
+        })
+
+        app.delete('/singlegear/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await gearCollection.deleteOne(query);
             res.send(result);
         })
 

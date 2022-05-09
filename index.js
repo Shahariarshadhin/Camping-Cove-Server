@@ -8,7 +8,13 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 
-app.use(cors());
+
+const corsConfig = {
+    origin: true,
+    Credentials: true,
+}
+app.use(cors(corsConfig));
+app.options('*', cors(corsConfig));
 app.use(express.json());
 
 
@@ -50,6 +56,8 @@ async function run() {
             const result = await gearCollection.deleteOne(query);
             res.send(result);
         })
+
+
 
 
         app.put('/gear/:id', async (req, res) => {
